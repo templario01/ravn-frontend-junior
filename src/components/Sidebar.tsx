@@ -2,6 +2,7 @@ import { Fragment, useContext, useState } from 'react'
 import {
   AllPeopleResponse,
   IFetchMore,
+  IFetchMoreResult,
   Person,
   StarwarsContext,
   StarwarsContextType,
@@ -11,7 +12,7 @@ import logo from '../assets/load.gif'
 
 export const Sidebar = () => {
   const [isLoadingMore, setLoadingMore] = useState(false)
-  const { data, fetchMore, take, loading } = useContext(
+  const { data, fetchMore, take, loading, setPersonId } = useContext(
     StarwarsContext
   ) as StarwarsContextType
 
@@ -19,13 +20,16 @@ export const Sidebar = () => {
     allPeopleData: AllPeopleResponse,
     fetchMorePeople: IFetchMore,
     step: number
-  ) => {
+  ): void => {
     const endCursor = allPeopleData?.allPeople?.pageInfo?.endCursor
     if (endCursor && fetchMorePeople) {
       setLoadingMore(true)
       fetchMorePeople({
         variables: { first: step, after: endCursor },
-        updateQuery: (prev: any, { fetchMoreResult }: any) => {
+        updateQuery: (
+          prev: AllPeopleResponse,
+          { fetchMoreResult }: IFetchMoreResult
+        ) => {
           setLoadingMore(false)
           if (!fetchMoreResult) {
             return prev
@@ -40,7 +44,7 @@ export const Sidebar = () => {
     }
   }
 
-  const getPersonDescription = (person: any) => {
+  const getInfo = (person: Person): string => {
     return `${person?.species?.name || 'Human'}  from ${
       person?.homeworld?.name || ''
     }`
@@ -52,13 +56,14 @@ export const Sidebar = () => {
         return (
           <Fragment key={index}>
             <li
-              className="border-b- w-full h-24 flex justify-center items-center content-center flex-col"
+              className="border-b- w-full h-24 flex justify-center items-center content-center flex-col border-b cursor-pointer"
               key={person.name}
+              onClick={() => {
+                setPersonId(person.id)
+              }}
             >
               <h2 className="font-bold ">{person.name}</h2>
-              <span className="text-slate-600">
-                {getPersonDescription(person)}
-              </span>
+              <span className="text-slate-600">{getInfo(person)}</span>
             </li>
 
             {index + 1 === data?.allPeople?.people.length && (
@@ -68,7 +73,7 @@ export const Sidebar = () => {
         )
       })}
       {(loading || isLoadingMore) && (
-        <div className="pb-5 w-full flex justify-center gap-1">
+        <div className="pb-5 pt-5 w-full flex justify-center gap-1">
           <span className="font-bold">loading more items</span>&nbsp;
           <img className="w-5" src={logo} alt="loading..." />
         </div>

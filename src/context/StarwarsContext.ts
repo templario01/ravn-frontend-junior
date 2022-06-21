@@ -23,6 +23,11 @@ export type PageInfo = {
   startCursor: string
 }
 
+export type Variables = {
+  after: string
+  first: number
+}
+
 export type Response = {
   pageInfo: PageInfo
   people: Person[]
@@ -51,12 +56,19 @@ export type IFetchMore = <
   }
 ) => Promise<ApolloQueryResult<TFetchData>>
 
+export type IFetchMoreResult = {
+  fetchMoreResult: AllPeopleResponse
+  variables: Variables
+}
+
 export type StarwarsContextType = {
   data: any
   error: ApolloError | undefined
   loading: boolean
   take: number
   fetchMore: IFetchMore
+  personId: string
+  setPersonId: React.Dispatch<React.SetStateAction<string>>
 }
 
 // REFACTOR
