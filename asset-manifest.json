@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/ravn-frontend-junior/static/css/main.7fa32d78.css",
+    "main.js": "/ravn-frontend-junior/static/js/main.e9b455fb.js",
+    "static/js/787.e5b0ea69.chunk.js": "/ravn-frontend-junior/static/js/787.e5b0ea69.chunk.js",
+    "static/media/load.gif": "/ravn-frontend-junior/static/media/load.4721e7fab2b627d5714e.gif",
+    "index.html": "/ravn-frontend-junior/index.html",
+    "main.7fa32d78.css.map": "/ravn-frontend-junior/static/css/main.7fa32d78.css.map",
+    "main.e9b455fb.js.map": "/ravn-frontend-junior/static/js/main.e9b455fb.js.map",
+    "787.e5b0ea69.chunk.js.map": "/ravn-frontend-junior/static/js/787.e5b0ea69.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7fa32d78.css",
+    "static/js/main.e9b455fb.js"
+  ]
+}
